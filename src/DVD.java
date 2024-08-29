@@ -14,6 +14,14 @@ public class DVD {
 		return this.title;
 	}
 	
+	public String getRating() {
+		return this.rating;
+	}
+	
+	public int getRunningTime() {
+		return this.runningTime;
+	}
+	
 	
 	
 }
