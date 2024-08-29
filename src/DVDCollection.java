@@ -14,6 +14,7 @@ public class DVDCollection {
 	public String toString() {
 		// have a result string
 		String res = "";
+		int lastIndex = dvdArray.length - 1;
 		
 		res += "numdvds = " + Integer.toString(numdvds) + "\n";
 		res += "dvdArray.length = " + Integer.toString(dvdArray.length) + "\n";
@@ -24,7 +25,13 @@ public class DVDCollection {
 			String rating = dvdArray[i].getRating();
 			String runningTime = Integer.toString(dvdArray[i].getRunningTime());
 			
-			res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "\n";
+			if (i == lastIndex) {
+				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime;
+			} else {
+				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "\n";
+			}
+			
+
 		}
 		
 
