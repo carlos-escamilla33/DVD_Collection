@@ -10,5 +10,10 @@ public class DVD {
 		this.runningTime = dvdRunningTime;
 	}
 	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	
 	
 }
