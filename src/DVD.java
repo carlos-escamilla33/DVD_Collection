@@ -35,4 +35,8 @@ public class DVD {
 		this.runningTime = newRunningTime;
 	}
 	
+	public String toString() {
+		return getClass().getName() + '@' + Integer.toHexString(hashCode());
+	}
+	
 }
