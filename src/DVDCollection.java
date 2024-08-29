@@ -7,13 +7,23 @@ public class DVDCollection {
 	private boolean modified;
 	
 	public String toString() {
-		String header;
-		header = String.format("numdvds = " + Integer.toString(this.numdvds) +
-				"dvdArray.length = " + Integer.toString(this.numdvds));
-	
+		// have a result string
+		String res = "";
+		
+		res += "numdvds = " + Integer.toString(numdvds) + "\n";
+		res += "dvdArray.length = " + Integer.toString(dvdArray.length) + "\n";
+		
 		for (int i = 0; i < numdvds; i ++) {
+			String index = Integer.toString(i);
+			String title = dvdArray[i].getTitle();
+			String rating = dvdArray[i].getRating();
+			String runningTime = Integer.toString(dvdArray[i].getRunningTime());
 			
+			res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "\n";
 		}
+		
+
+		return res;
 		
 	}
 }
