@@ -1,5 +1,6 @@
 
 public class DVD {
+	
 	private String title;
 	private String rating;
 	private int runningTime;
@@ -22,6 +23,16 @@ public class DVD {
 		return this.runningTime;
 	}
 	
+	public void setTitle(String newTitle) {
+		this.title = newTitle;
+	}
 	
+	public void setRating(String newRating) {
+		this.rating = newRating;
+	}
+	
+	public void setRunningTime(int newRunningTime) {
+		this.runningTime = newRunningTime;
+	}
 	
 }
