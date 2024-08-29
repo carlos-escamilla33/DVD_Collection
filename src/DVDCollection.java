@@ -6,6 +6,11 @@ public class DVDCollection {
 	private String sourceName;
 	private boolean modified;
 	
+	public DVDCollection() {
+		numdvds = 0;
+		dvdArray = new DVD[7];
+	}
+	
 	public String toString() {
 		// have a result string
 		String res = "";
@@ -24,6 +29,9 @@ public class DVDCollection {
 		
 
 		return res;
-		
 	}
+	
+	
+	
+	
 }
