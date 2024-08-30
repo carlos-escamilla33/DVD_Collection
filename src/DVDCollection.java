@@ -45,6 +45,13 @@ public class DVDCollection {
 			// check to see if the modified attribute is true because if it is not
 			if (!this.modified) {
 				// check to see if we need to double the size of our dvdArray
+				if (numdvds == dvdArray.length) {
+					DVD[] tempArr;
+					
+					tempArr = new DVD[this.dvdArray.length * 2];
+					System.arraycopy(this.dvdArray, 0, tempArr, 0, this.dvdArray.length);
+					this.dvdArray = tempArr;
+				}
 				// add the dvd to the collection in abc order
 			}
 		}
