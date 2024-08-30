@@ -40,7 +40,7 @@ public class DVDCollection {
 		// check to see if the rating and running time is valid
 		if (rating.length() > 0 && runningTime.length() > 0) {
 			// call the modifyDVD helper method
-			this.modifyDVD(title, rating, runningTime);
+			this.modifyDVDHelper(title, rating, runningTime);
 			
 			// check to see if the modified attribute is true because if it is not
 			if (!this.modified) {
@@ -52,7 +52,11 @@ public class DVDCollection {
 	
 	
 	// Additional helper methods
-	private void modifyDVD(String title, String rating, String runningTime) {
+	private void addDVDHelper() {
+		
+	}
+	
+	private void modifyDVDHelper(String title, String rating, String runningTime) {
 		for (int i = 0; i < numdvds; i ++) {
 			if (this.modified) {
 				break;
