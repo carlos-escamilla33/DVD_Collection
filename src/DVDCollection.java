@@ -26,16 +26,23 @@ public class DVDCollection {
 			String runningTime = Integer.toString(dvdArray[i].getRunningTime());
 			
 			if (i == lastIndex) {
-				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime;
+				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
 			} else {
-				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "\n";
+				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
 			}
-			
-
 		}
 		
 
 		return res;
+	}
+	
+	public void addOrModifyDVD(String title, String rating, String runningTime) {
+		// add the DVD to the collection if the title is not present
+		
+		// iterate through the dvdArray to find the title
+			// modify the rating and running time if the title is present in the collection
+		
+		
 	}
 	
 	
