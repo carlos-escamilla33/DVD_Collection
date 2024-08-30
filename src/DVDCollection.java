@@ -37,15 +37,34 @@ public class DVDCollection {
 	}
 	
 	public void addOrModifyDVD(String title, String rating, String runningTime) {
-		// add the DVD to the collection if the title is not present
-		
-		// iterate through the dvdArray to find the title
-			// modify the rating and running time if the title is present in the collection
-		
-		
+		// check to see if the rating and running time is valid
+		if (rating.length() > 0 && runningTime.length() > 0) {
+			// call the modifyDVD helper method
+			this.modifyDVD(title, rating, runningTime);
+			
+			// check to see if the modified attribute is true because if it is not
+			if (!this.modified) {
+				// check to see if we need to double the size of our dvdArray
+				// add the dvd to the collection in abc order
+			}
+		}
 	}
 	
 	
+	// Additional helper methods
+	private void modifyDVD(String title, String rating, String runningTime) {
+		for (int i = 0; i < numdvds; i ++) {
+			if (this.modified) {
+				break;
+			}
+			if (title == dvdArray[i].getTitle()) {
+				dvdArray[i].setRating(rating);
+				dvdArray[i].setRunningTime(Integer.parseInt(runningTime));
+				this.modified = true;
+			}
+		}
+		
+	}
 	
 	
 }
