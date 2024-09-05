@@ -26,7 +26,7 @@ public class DVDCollection {
 			String runningTime = Integer.toString(dvdArray[i].getRunningTime());
 			
 			if (i == lastIndex) {
-				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
+				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min";
 			} else {
 				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
 			}
@@ -49,18 +49,47 @@ public class DVDCollection {
 					DVD[] tempArr;
 					
 					tempArr = new DVD[this.dvdArray.length * 2];
+					// might have to go back and alter this
 					System.arraycopy(this.dvdArray, 0, tempArr, 0, this.dvdArray.length);
 					this.dvdArray = tempArr;
 				}
-				// add the dvd to the collection in abc order
+				this.addDVDHelper(title, rating, runningTime);
 			}
 		}
 	}
 	
 	
 	// Additional helper methods
-	private void addDVDHelper() {
+	private Integer findInsertionIndex(DVD newDVD) {
+		int correctIdx = 0;
 		
+		for (int i = 0; i < dvdArray.length; i ++) {
+			String currTitle = dvdArray[i].getTitle();
+			String newTitle = newDVD.getTitle();
+			
+			int j = 0;
+			int k = 0;
+			
+			while (j < currTitle.length() && k < newTitle.length()) {
+				int currLetterAscii = (int) currTitle.charAt(j);
+				int newLetterAscii = (int) newTitle.charAt(k);
+				
+			}
+			
+		}
+		
+		
+		return 1;
+	}
+	
+	private void addDVDHelper(String title, String rating, String runningTime) {
+		// create the new dvd instance and parse the runningTime because the constructor expects an integer for that input
+		DVD newestDvd = new DVD(title, rating, Integer.parseInt(runningTime));
+		
+		// iterate through the dvdArr
+		// find position
+		// shift everything over
+		// insert into correct position
 	}
 	
 	private void modifyDVDHelper(String title, String rating, String runningTime) {
