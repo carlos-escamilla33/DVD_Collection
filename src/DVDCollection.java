@@ -67,10 +67,20 @@ public class DVDCollection {
 		}
 	}
 	
+	public String getDVDsByRating(String rating) {
+		String res = "";
+		
+		for (int i = 0; i < this.numdvds; i ++) {
+			res += this.dvdArray[i].getTitle() + "\n";
+		}
+	
+		return res;
+	}
 	
 	
 	
-	// Additional helper methods ********
+	
+	// ******** Additional helper methods ********
 	private void shiftDVDCollectionLeft(int startIndex) {
 		int p1 = startIndex;
 		int p2 = p1 + 1;
@@ -134,16 +144,12 @@ public class DVDCollection {
 	}
 	
 	private void addDVDHelper(String title, String rating, String runningTime) {
-		// create the new dvd instance and parse the runningTime because the constructor expects an integer for that input
 		DVD newestDvd = new DVD(title, rating, Integer.parseInt(runningTime));
-		
-		// find position
+
 		int insertionIndex = this.findInsertionIndex(newestDvd);
-		// shift everything over up to the correct position
 		this.shiftDVDCollectionRight(insertionIndex);
-		// insert into correct position
 		this.dvdArray[insertionIndex] = newestDvd;
-		// update number of dvds
+	
 		this.numdvds ++;
 	}
 	
