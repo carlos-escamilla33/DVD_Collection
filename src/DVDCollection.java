@@ -61,12 +61,10 @@ public class DVDCollection {
 	
 	// Additional helper methods
 	private Integer findInsertionIndex(DVD newDVD) {
-		int correctIdx = 0;
+		String newTitle = newDVD.getTitle().toLowerCase();
 		
-		for (int i = 0; i < dvdArray.length; i ++) {
-			String currTitle = dvdArray[i].getTitle();
-			String newTitle = newDVD.getTitle();
-			
+		for (int i = 0; i < numdvds; i ++) {
+			String currTitle = dvdArray[i].getTitle().toLowerCase();
 			int j = 0;
 			int k = 0;
 			
@@ -74,21 +72,26 @@ public class DVDCollection {
 				int currLetterAscii = (int) currTitle.charAt(j);
 				int newLetterAscii = (int) newTitle.charAt(k);
 				
+				if (newLetterAscii < currLetterAscii) {
+					return i;
+				}
+				j ++;
+				k ++;
 			}
 			
 		}
 		
-		
-		return 1;
+		return 0;
 	}
 	
 	private void addDVDHelper(String title, String rating, String runningTime) {
 		// create the new dvd instance and parse the runningTime because the constructor expects an integer for that input
 		DVD newestDvd = new DVD(title, rating, Integer.parseInt(runningTime));
 		
-		// iterate through the dvdArr
 		// find position
+		int insertionIndex = this.findInsertionIndex(newestDvd);
 		// shift everything over
+		
 		// insert into correct position
 	}
 	
