@@ -53,10 +53,37 @@ public class DVDCollection {
 		}
 	}
 	
+	public void removeDVD(String title) {
+		// iterate through the array
+		for (int i = 0; i < this.numdvds; i ++) {
+			DVD curr = this.dvdArray[i];
+			
+			if (curr.getTitle() == title.toUpperCase()) {
+				this.shiftDVDCollectionLeft(i);
+				numdvds --;
+				this.dvdArray[dvdArray.length - 1] = null;
+				break;
+			}
+		}
+	}
+	
 	
 	
 	
 	// Additional helper methods ********
+	private void shiftDVDCollectionLeft(int startIndex) {
+		int p1 = startIndex;
+		int p2 = p1 + 1;
+		
+		while (p2 < this.dvdArray.length) {
+			DVD tmp = this.dvdArray[p1];
+			this.dvdArray[p1] = this.dvdArray[p2];
+			this.dvdArray[p2] = tmp;
+			p1 ++;
+			p2 ++;
+		}
+	}
+	
 	private Boolean isAlpha(int asciiCode) {
 		return (asciiCode >= 97 && asciiCode <= 122);
 	}
@@ -93,7 +120,7 @@ public class DVDCollection {
 		return insertionIndex;
 	}
 	
-	private void shiftDVDCollection(int endIndex) {
+	private void shiftDVDCollectionRight(int endIndex) {
 		int p1 = this.numdvds - 1;
 		int p2 = this.numdvds;
 		
@@ -113,7 +140,7 @@ public class DVDCollection {
 		// find position
 		int insertionIndex = this.findInsertionIndex(newestDvd);
 		// shift everything over up to the correct position
-		this.shiftDVDCollection(insertionIndex);
+		this.shiftDVDCollectionRight(insertionIndex);
 		// insert into correct position
 		this.dvdArray[insertionIndex] = newestDvd;
 		// update number of dvds
