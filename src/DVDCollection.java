@@ -77,6 +77,17 @@ public class DVDCollection {
 		return res;
 	}
 	
+	public int getTotalRunningTime() {
+		int totalTime = 0;
+		
+		for (int i = 0; i < this.numdvds; i ++) {
+			totalTime += this.dvdArray[i].getRunningTime();
+		}
+		
+		return totalTime;
+	}
+	
+	
 	
 	
 	
@@ -98,7 +109,7 @@ public class DVDCollection {
 		return (asciiCode >= 97 && asciiCode <= 122);
 	}
 	
-	private Integer findInsertionIndex(DVD newDVD) {
+	private int findInsertionIndex(DVD newDVD) {
 		int insertionIndex = 0;
 		String newTitle = newDVD.getTitle().toLowerCase();
 		
