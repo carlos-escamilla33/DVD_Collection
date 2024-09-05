@@ -60,7 +60,12 @@ public class DVDCollection {
 	
 	
 	// Additional helper methods
+	private Boolean isAlpha(int asciiCode) {
+		return (asciiCode >= 97 && asciiCode <= 122);
+	}
+	
 	private Integer findInsertionIndex(DVD newDVD) {
+		int insertionIndex = 0;
 		String newTitle = newDVD.getTitle().toLowerCase();
 		
 		for (int i = 0; i < numdvds; i ++) {
@@ -69,19 +74,26 @@ public class DVDCollection {
 			int k = 0;
 			
 			while (j < currTitle.length() && k < newTitle.length()) {
-				int currLetterAscii = (int) currTitle.charAt(j);
-				int newLetterAscii = (int) newTitle.charAt(k);
 				
-				if (newLetterAscii < currLetterAscii) {
-					return i;
+				while (j < currTitle.length() && !this.isAlpha((int) currTitle.charAt(j))) {
+					j ++;
 				}
+				
+				while (k < newTitle.length() && !this.isAlpha((int) newTitle.charAt(k))) {
+					k ++;
+				}
+				
+				if ((int) newTitle.charAt(k) > (int) currTitle.charAt(j)) {
+					insertionIndex = i;
+					break;
+				}
+				
 				j ++;
 				k ++;
 			}
-			
 		}
 		
-		return 0;
+		return insertionIndex;
 	}
 	
 	private void addDVDHelper(String title, String rating, String runningTime) {
