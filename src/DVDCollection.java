@@ -45,13 +45,8 @@ public class DVDCollection {
 			// check to see if the modified attribute is true because if it is not
 			if (!this.modified) {
 				// check to see if we need to double the size of our dvdArray
-				if (numdvds + 1 == dvdArray.length) {
-					DVD[] tempArr;
-					
-					tempArr = new DVD[this.dvdArray.length * 2];
-					// might have to go back and alter this
-					System.arraycopy(this.dvdArray, 0, tempArr, 0, this.dvdArray.length);
-					this.dvdArray = tempArr;
+				if (numdvds == dvdArray.length) {
+					this.doubleArraySize();
 				}
 				this.addDVDHelper(title, rating, runningTime);
 			}
@@ -123,6 +118,18 @@ public class DVDCollection {
 		this.dvdArray[insertionIndex] = newestDvd;
 		// update number of dvds
 		this.numdvds ++;
+	}
+	
+	private void doubleArraySize() {
+		DVD[] tempArr;
+		
+		tempArr = new DVD[this.dvdArray.length * 2];
+	
+		for (int i = 0; i < this.dvdArray.length; i ++) {
+			tempArr[i] = this.dvdArray[i];
+		}
+		
+		this.dvdArray = tempArr;
 	}
 	
 	private void modifyDVDHelper(String title, String rating, String runningTime) {
