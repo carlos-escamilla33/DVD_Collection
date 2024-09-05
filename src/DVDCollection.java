@@ -45,7 +45,7 @@ public class DVDCollection {
 			// check to see if the modified attribute is true because if it is not
 			if (!this.modified) {
 				// check to see if we need to double the size of our dvdArray
-				if (numdvds == dvdArray.length) {
+				if (numdvds + 1 == dvdArray.length) {
 					DVD[] tempArr;
 					
 					tempArr = new DVD[this.dvdArray.length * 2];
@@ -59,7 +59,7 @@ public class DVDCollection {
 	}
 	
 	
-	// Additional helper methods
+	// Additional helper methods ********
 	private Boolean isAlpha(int asciiCode) {
 		return (asciiCode >= 97 && asciiCode <= 122);
 	}
@@ -96,6 +96,19 @@ public class DVDCollection {
 		return insertionIndex;
 	}
 	
+	private void shiftDVDCollection(int endIndex) {
+		int p1 = this.numdvds - 1;
+		int p2 = this.numdvds;
+		
+		while (p1 >= endIndex) {
+			DVD tmp = this.dvdArray[p1];
+			this.dvdArray[p1] = this.dvdArray[p2];
+			this.dvdArray[p2] = tmp;
+			p1 --;
+			p2 --;
+		}
+	}
+	
 	private void addDVDHelper(String title, String rating, String runningTime) {
 		// create the new dvd instance and parse the runningTime because the constructor expects an integer for that input
 		DVD newestDvd = new DVD(title, rating, Integer.parseInt(runningTime));
@@ -103,8 +116,11 @@ public class DVDCollection {
 		// find position
 		int insertionIndex = this.findInsertionIndex(newestDvd);
 		// shift everything over
-		
+		this.shiftDVDCollection(insertionIndex);
 		// insert into correct position
+		this.dvdArray[insertionIndex] = newestDvd;
+		// update number of dvds
+		this.numdvds ++;
 	}
 	
 	private void modifyDVDHelper(String title, String rating, String runningTime) {
