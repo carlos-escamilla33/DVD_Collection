@@ -38,7 +38,7 @@ public class DVDCollection {
 	
 	public void addOrModifyDVD(String title, String rating, String runningTime) {
 		// check to see if the rating and running time is valid
-		if (rating.length() > 0 && runningTime.length() > 0) {
+		if (rating.length() > 0 && Integer.parseInt(runningTime) > 0) {
 			// call the modifyDVD helper method
 			this.modifyDVDHelper(title, rating, runningTime);
 			
@@ -57,6 +57,8 @@ public class DVDCollection {
 			}
 		}
 	}
+	
+	
 	
 	
 	// Additional helper methods ********
@@ -115,7 +117,7 @@ public class DVDCollection {
 		
 		// find position
 		int insertionIndex = this.findInsertionIndex(newestDvd);
-		// shift everything over
+		// shift everything over up to the correct position
 		this.shiftDVDCollection(insertionIndex);
 		// insert into correct position
 		this.dvdArray[insertionIndex] = newestDvd;
