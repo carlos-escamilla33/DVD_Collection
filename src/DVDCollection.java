@@ -138,24 +138,46 @@ public class DVDCollection {
 	
 	// ******** Additional helper methods ********
 	
-	private String[] getDVDInfo(String data) {
-		// create the dvdInfo array with a length of 3
-		String[] dvdInfoArray = new String[3];
-		int j = 0;
-		
-		for (int i = 0; i < data.length(); i ++) {
-			String currData = "";
-			
-			while (i < data.length() && data.charAt(i) != ',') {
-				currData += data.charAt(i);
-				i ++;
-			}
-			dvdInfoArray[j] = currData;
-			j ++;
-		}
-		
-		return dvdInfoArray;
-	}
+//	private String[] getDVDInfo(String data) {
+//		// create the dvdInfo array with a length of 3
+//		String[] dvdInfoArray = new String[3];
+//		int startIdx = 0;
+//		int j = 0;
+//		
+//		for (int i = 0; i <= data.length(); i ++) {
+//			
+//			if (data.charAt(i) == ',' || i == data.length() - 1) {
+//				
+//				String currData = "";
+//				int k = startIdx;
+//				
+//				while (k < i) {
+//					currData += data.charAt(k);
+//					k ++;
+//				}
+//				
+//				if (j < 3) {
+//					dvdInfoArray[j] = currData;
+//					j ++;
+//				}
+//				
+//				startIdx = i + 1;
+//			}
+//		}
+//		
+//		if (j < 3 && startIdx < data.length()) {
+//			String endData = "";
+//			
+//			while(startIdx < data.length()) {
+//				endData += data.charAt(startIdx);
+//				startIdx ++;
+//			}
+//			
+//			dvdInfoArray[j] = endData;
+//		}
+//		
+//		return dvdInfoArray;
+//	}
 	
 	private void shiftDVDCollectionLeft(int startIndex) {
 		int p1 = startIndex;
