@@ -87,6 +87,9 @@ public class DVDCollection {
 		return totalTime;
 	}
 	
+	public void loadData(String filename) {
+		
+	}
 	
 	
 	
