@@ -67,7 +67,9 @@ public class DVDCollection {
 		String res = "";
 		
 		for (int i = 0; i < this.numdvds; i ++) {
-			res += this.dvdArray[i].getTitle() + "\n";
+			if (this.dvdArray[i].getRating() == rating) {
+				res += this.dvdArray[i].getTitle() + "\n";
+			}
 		}
 	
 		return res;
@@ -129,6 +131,7 @@ public class DVDCollection {
 		// create the dvdInfo array with a length of 3
 		String[] dvdInfoArray = new String[3];
 		int j = 0;
+		
 		for (int i = 0; i < data.length(); i ++) {
 			String currData = "";
 			
