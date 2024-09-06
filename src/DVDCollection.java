@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class DVDCollection {
 	private int numdvds;
@@ -28,7 +29,6 @@ public class DVDCollection {
 			res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
 		}
 		
-
 		return res;
 	}
 	
@@ -84,12 +84,34 @@ public class DVDCollection {
 	}
 	
 	public void loadData(String filename) {
+		// init the infile
+		File inFile = new File(filename);
 		// try to open the file input
-		// read the DVD data to create an alphabetized DVD Collection (most likely using other methods)
-		// read each set of three values (title, rating, runningTime)
+		try {
+			// scanner will help us read the line
+			Scanner scanner = new Scanner(inFile);
+			// checking to see if there exists a next line of text
+			while (scanner.hasNextLine()) {
+				// reading the current line
+				String data = scanner.nextLine();
+				// create a helper function to get the title rating and runningTime
+				String[] dvdInfo = this.getDVDInfo(data);
+				// use those three values to create a dvd by using the addOrModify method
+				this.addOrModifyDVD(dvdInfo[0], dvdInfo[1], dvdInfo[2]);
+			}
+			
+			scanner.close();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		// use the addOrModifyDVD method to insert into collection
 		// if the file cannot be found start with an empty array
 		// if the data is corrupted then stop intializing
+	}
+	
+	public void save() {
+		
 	}
 	
 	
@@ -98,6 +120,24 @@ public class DVDCollection {
 	
 	
 	// ******** Additional helper methods ********
+	private String[] getDVDInfo(String data) {
+		// create the dvdInfo array with a length of 3
+		String[] dvdInfoArray = new String[3];
+		int j = 0;
+		for (int i = 0; i < data.length(); i ++) {
+			String currData = "";
+			
+			while (data.charAt(i) != ',') {
+				currData += data.charAt(i);
+				i ++;
+			}
+			dvdInfoArray[j] = currData;
+			j ++;
+		}
+		
+		return dvdInfoArray;
+	}
+	
 	private void shiftDVDCollectionLeft(int startIndex) {
 		int p1 = startIndex;
 		int p2 = p1 + 1;
