@@ -15,7 +15,6 @@ public class DVDCollection {
 	public String toString() {
 		// have a result string
 		String res = "";
-		int lastIndex = dvdArray.length - 1;
 		
 		res += "numdvds = " + Integer.toString(numdvds) + "\n";
 		res += "dvdArray.length = " + Integer.toString(dvdArray.length) + "\n";
@@ -147,7 +146,7 @@ public class DVDCollection {
 		for (int i = 0; i < data.length(); i ++) {
 			String currData = "";
 			
-			while (data.charAt(i) != ',') {
+			while (i < data.length() && data.charAt(i) != ',') {
 				currData += data.charAt(i);
 				i ++;
 			}
