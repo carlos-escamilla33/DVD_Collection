@@ -25,11 +25,7 @@ public class DVDCollection {
 			String rating = dvdArray[i].getRating();
 			String runningTime = Integer.toString(dvdArray[i].getRunningTime());
 			
-			if (i == lastIndex) {
-				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min";
-			} else {
-				res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
-			}
+			res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
 		}
 		
 
@@ -88,8 +84,15 @@ public class DVDCollection {
 	}
 	
 	public void loadData(String filename) {
-		
+		// try to open the file input
+		// read the DVD data to create an alphabetized DVD Collection (most likely using other methods)
+		// read each set of three values (title, rating, runningTime)
+		// use the addOrModifyDVD method to insert into collection
+		// if the file cannot be found start with an empty array
+		// if the data is corrupted then stop intializing
 	}
+	
+	
 	
 	
 	
