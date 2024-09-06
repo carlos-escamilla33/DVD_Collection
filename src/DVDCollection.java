@@ -96,6 +96,10 @@ public class DVDCollection {
 				String data = scanner.nextLine();
 				// create a helper function to get the title rating and runningTime
 				String[] dvdInfo = this.getDVDInfo(data);
+				// check to see if data is corrupted, if the data is corrupted then stop intializing
+				if (dvdInfo.length != 3) {
+					break;
+				}
 				// use those three values to create a dvd by using the addOrModify method
 				this.addOrModifyDVD(dvdInfo[0], dvdInfo[1], dvdInfo[2]);
 			}
@@ -104,10 +108,10 @@ public class DVDCollection {
 			
 		} catch (Exception e) {
 			System.out.println(e);
+			// if the file cannot be found start with an empty array
+			this.dvdArray = new DVD[7];
+			this.numdvds = 0;
 		}
-		// use the addOrModifyDVD method to insert into collection
-		// if the file cannot be found start with an empty array
-		// if the data is corrupted then stop intializing
 	}
 	
 	public void save() {
@@ -120,6 +124,7 @@ public class DVDCollection {
 	
 	
 	// ******** Additional helper methods ********
+	
 	private String[] getDVDInfo(String data) {
 		// create the dvdInfo array with a length of 3
 		String[] dvdInfoArray = new String[3];
