@@ -87,7 +87,8 @@ public class DVDCollection {
 	
 	public void loadData(String filename) {
 		// init the infile
-		File inFile = new File(filename);
+		this.sourceName = filename;
+		File inFile = new File(this.sourceName);
 		// try to open the file input
 		try {
 			// scanner will help us read the line
@@ -117,7 +118,18 @@ public class DVDCollection {
 	}
 	
 	public void save() {
+		File file = new File(this.sourceName);
 		
+		try {
+			if (file.createNewFile()) {
+				FileWriter myWriter = new FileWriter(this.sourceName);
+				myWriter.write(this.toString());
+				myWriter.close();
+			}
+			
+		} catch (IOException el) {
+			el.printStackTrace();
+		}
 	}
 	
 	
@@ -160,12 +172,12 @@ public class DVDCollection {
 	}
 	
 	private Boolean isAlpha(int asciiCode) {
-		return (asciiCode >= 97 && asciiCode <= 122);
+		return (asciiCode >= 65 && asciiCode <= 90);
 	}
 	
 	private int findInsertionIndex(DVD newDVD) {
 		int insertionIndex = 0;
-		String newTitle = newDVD.getTitle().toLowerCase();
+		String newTitle = newDVD.getTitle().toUpperCase();
 		
 		for (int i = 0; i < numdvds; i ++) {
 			String currTitle = dvdArray[i].getTitle().toLowerCase();
@@ -231,11 +243,12 @@ public class DVDCollection {
 	}
 	
 	private void modifyDVDHelper(String title, String rating, String runningTime) {
+		
 		for (int i = 0; i < numdvds; i ++) {
 			if (this.modified) {
 				break;
 			}
-			if (title == dvdArray[i].getTitle()) {
+			if (title.toUpperCase() == dvdArray[i].getTitle()) {
 				dvdArray[i].setRating(rating);
 				dvdArray[i].setRunningTime(Integer.parseInt(runningTime));
 				this.modified = true;
