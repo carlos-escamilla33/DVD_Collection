@@ -9,10 +9,21 @@ public class DVDCollection {
 	private String sourceName;
 	private boolean modified;
 	
+	/**
+     * Creates a new DVD Collection with the specified details.
+     * The collection starts with initializing numdvds to 0
+     * The array of the collection is initialized to length seven
+     */
 	public DVDCollection() {
 		numdvds = 0;
 		dvdArray = new DVD[7];
 	}
+	
+	/**
+     * Returns the string representation of the DVD Collection.
+     * 
+     * @return String representation of the DVD Collection.
+     */
 	
 	public String toString() {
 		String res = "";
@@ -32,6 +43,16 @@ public class DVDCollection {
 		return res;
 	}
 	
+	 /**
+     * Adds a new DVD to the collection.
+     * Modifies exisiting title in the collection
+     * If the array of the collection is valid, double the size
+     * 
+     * @param runningTime The running time in minutes. It must be greater than zero.
+     * @param rating The rating must be valid. It must be checked to see if its valid.
+     * 
+     */
+	
 	public void addOrModifyDVD(String title, String rating, String runningTime) {
 		
 		if (this.checkRating(rating) && Integer.parseInt(runningTime) > 0) {
@@ -46,7 +67,12 @@ public class DVDCollection {
 			}
 		}
 	}
-
+	
+	 /**
+     * Removes dvd from collection if it exists.
+     *
+     * @param title The title of the dvd is in all caps.
+     */
 	public void removeDVD(String title) {
 		// iterate through the array
 		for (int i = 0; i < this.numdvds; i ++) {
@@ -61,6 +87,13 @@ public class DVDCollection {
 		}
 	}
 	
+	
+	 /**
+     * Returns the dvds that match the rating input parameter.
+     *
+     * @param rating The rating must be present in one of the dvds
+     * @return string concatenation of the valid dvds that match the rating input
+     */
 	public String getDVDsByRating(String rating) {
 		String res = "";
 		
@@ -74,6 +107,12 @@ public class DVDCollection {
 		return res;
 	}
 	
+	 /**
+     * Returns the total running time of all the dvds.
+     *
+     * @return totalTime The calculated total of all the dvds runningTime
+     */
+	
 	public int getTotalRunningTime() {
 		int totalTime = 0;
 		
@@ -83,6 +122,17 @@ public class DVDCollection {
 		
 		return totalTime;
 	}
+	
+	 /**
+     * Loads up the data line by line from the input filename.
+     * Input file should contain valid data
+     * 
+     * This method reads each document line and creates/modifies a dvd object
+     * 
+     * This method initializes the dvdArray to an empty one if the input file is invalid
+     *
+     * @param filename The filename must be in the correct format
+     */
 	
 	public void loadData(String filename) {
 		this.sourceName = filename;
@@ -110,6 +160,12 @@ public class DVDCollection {
 		}
 	}
 	
+	
+	/**
+	 * Writes out to an exisiting file
+	 * 
+	 * @catch catches errors in attempting to writing to the sourceName file
+	 */
 	public void save() {
 		File file = new File(this.sourceName);
 		
@@ -130,6 +186,12 @@ public class DVDCollection {
 	
 	// ******** Additional helper methods ********
 	
+	/**
+	 * This helper method formats the dvds for the save() method
+	 * This helper takes advantage of each dvd's toString method
+	 * 
+	 * @return the formatted dvd information
+	 */
 	private String outputDVDs() {
 		String res = "";
 		
@@ -139,6 +201,17 @@ public class DVDCollection {
 		
 		return res;
 	}
+	
+	/**
+	 * Parses a coma separated string into an array of DVD attributes
+	 * 
+	 * This helper method is used by the loadData class method to correctly
+	 * extract the contents of each line being read
+	 * 
+	 * @param data This is the line that was read from the input file in loadData
+	 * @return An array of strings that contain infromation on the current DVD being read
+	 * 
+	 */
 	
 	private String[] getDVDInfo(String data) {
 		String[] dvdInfoArray = new String[3];
@@ -179,6 +252,14 @@ public class DVDCollection {
 		return dvdInfoArray;
 	}
 	
+	
+	/**
+	 * Shifts the dvd array to the left after removing from the dvd collection
+	 * This is a helper method for removeDVD
+	 * 
+	 * @param startIndex The index that we will start shifting the array over
+	 * 
+	 */
 	private void shiftDVDCollectionLeft(int startIndex) {
 		int p1 = startIndex;
 		int p2 = p1 + 1;
@@ -192,10 +273,26 @@ public class DVDCollection {
 		}
 	}
 	
+	/**
+	 * This helper method returns a boolean of the ascii code being inserted
+	 * The ascii code must be traced back to an uppercase letter
+	 * 
+	 * @param asciiCode The ascii code of the current letter being processed in findInsertionIndex
+	 * @return True or False when it comes to finding out of the asciiCode belongs to a uppercase letter
+	 */
+	
 	private Boolean isNotAlpha(int asciiCode) {
 		return (asciiCode < 65 || asciiCode > 90);
 	}
 	
+	
+	/**
+	 * This method compares every dvd title to the newest title 
+	 * and sorts them in the correct spot
+	 * 
+	 * @param newDVD An instance of the newest dvd being added to the collection
+	 * @return insertionIndex The correct index for the newest dvd to be inserted into
+	 */
 	private int findInsertionIndex(DVD newDVD) {
 		int insertionIndex = 0;
 		String newTitle = newDVD.getTitle().toUpperCase();
@@ -233,6 +330,13 @@ public class DVDCollection {
 		return insertionIndex;
 	}
 	
+	/**
+	 * This method shifts over the contents of the dvd collection array
+	 * There is swapping that achieves the end result
+	 * 
+	 * @param endIndex Is used as a stopping index as the dvd array is shifted over to the right
+	 */
+	
 	private void shiftDVDCollectionRight(int endIndex) {
 		int p1 = this.numdvds - 1;
 		int p2 = this.numdvds;
@@ -246,6 +350,21 @@ public class DVDCollection {
 		}
 	}
 	
+	
+	/**
+	 * Helper method to addOrModify class method to add a dvd to the collection
+	 * 
+	 * This method uses other helper methods to find the correct location to insert
+	 * the newest dvd addition (insertionIndex)
+	 * 
+	 * The shiftDVDCollection is used to move over dvds for the newest addition
+	 * 
+	 * The insertionIndex is them used to assign that memory location to the newest dvd
+	 * 
+	 * Bookeeping by updating the number of dvds
+	 * 
+	 * 
+	 */
 	private void addDVDHelper(String title, String rating, String runningTime) {
 		DVD newestDvd = new DVD(title, rating, Integer.parseInt(runningTime));
 
@@ -256,6 +375,12 @@ public class DVDCollection {
 		this.numdvds ++;
 	}
 	
+	/**
+	 * Doubles the size of the DVD collection array if it is full
+	 * This helper method is used in addOrModify class method
+	 * 
+	 * A temp array is created an then is referenced by dvdArray
+	 */
 	private void doubleArraySize() {
 		DVD[] tempArr;
 		
@@ -267,6 +392,15 @@ public class DVDCollection {
 		
 		this.dvdArray = tempArr;
 	}
+	
+	/**
+	 * Modifies an existing dvd information like rating and runningTime
+	 * Updates the modified class attribute if the title exists in the collection
+	 * 
+	 * @param title The title of the DVD
+	 * @param rating The rating of the DVD
+	 * @param runningTime The runningTime of the DVD
+	 */
 	
 	private void modifyDVDHelper(String title, String rating, String runningTime) {
 		
@@ -282,6 +416,13 @@ public class DVDCollection {
 		}
 		
 	}
+	
+	/**
+	 * Constructs a hashtable to store the dvd ratings
+	 * 
+	 * @param rating The current input rating
+	 * @return A boolean that concludes if the rating is of valid format or not
+	 */
 	
 	private Boolean checkRating(String rating) {
 		Set<String> tvRatings = new HashSet<>();
