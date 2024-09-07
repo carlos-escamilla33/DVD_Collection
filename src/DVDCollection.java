@@ -1,5 +1,7 @@
 import java.io.*;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class DVDCollection {
 	private int numdvds;
@@ -24,14 +26,16 @@ public class DVDCollection {
 			String rating = dvdArray[i].getRating();
 			String runningTime = Integer.toString(dvdArray[i].getRunningTime());
 			
-			res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "min" + "\n";
+			res += "dvdArray[" + index + "] = " + title + "/" + rating + "/" + runningTime + "\n";
 		}
 		
 		return res;
 	}
 	
 	public void addOrModifyDVD(String title, String rating, String runningTime) {
-		if (rating.length() > 0 && Integer.parseInt(runningTime) > 0) {
+		
+		if (this.checkRating(rating) && Integer.parseInt(runningTime) > 0) {
+			
 			this.modifyDVDHelper(title, rating, runningTime);
 			
 			if (!this.modified) {
@@ -42,7 +46,7 @@ public class DVDCollection {
 			}
 		}
 	}
-	
+
 	public void removeDVD(String title) {
 		// iterate through the array
 		for (int i = 0; i < this.numdvds; i ++) {
@@ -137,11 +141,9 @@ public class DVDCollection {
 	}
 	
 	private String[] getDVDInfo(String data) {
-		// create the dvdInfo array with a length of 3
 		String[] dvdInfoArray = new String[3];
 		int startIdx = 0;
 		int j = 0;
-		// this fuckingn line
 		for (int i = 0; i < data.length(); i ++) {
 			
 			if (data.charAt(i) == ',') {
@@ -190,32 +192,36 @@ public class DVDCollection {
 		}
 	}
 	
-	private Boolean isAlpha(int asciiCode) {
-		return (asciiCode >= 65 && asciiCode <= 90);
+	private Boolean isNotAlpha(int asciiCode) {
+		return (asciiCode < 65 || asciiCode > 90);
 	}
 	
 	private int findInsertionIndex(DVD newDVD) {
 		int insertionIndex = 0;
 		String newTitle = newDVD.getTitle().toUpperCase();
 		
-		for (int i = 0; i < numdvds; i ++) {
+		for (int i = 0; i < this.numdvds; i ++) {
 			String currTitle = dvdArray[i].getTitle().toUpperCase();
 			int j = 0;
 			int k = 0;
 			
 			while (j < currTitle.length() && k < newTitle.length()) {
 				
-				while (j < currTitle.length() && !this.isAlpha((int) currTitle.charAt(j))) {
+				while (j < currTitle.length() && this.isNotAlpha((int) currTitle.charAt(j))) {
 					j ++;
 				}
 				
-				while (k < newTitle.length() && !this.isAlpha((int) newTitle.charAt(k))) {
+				while (k < newTitle.length() && this.isNotAlpha((int) newTitle.charAt(k))) {
 					k ++;
 				}
 				
+				int newTitleCode = (int) newTitle.charAt(k);
+				int currTitleCode = (int) currTitle.charAt(j);
 				
-				if ((int) newTitle.charAt(k) > (int) currTitle.charAt(j)) {
-					insertionIndex ++;
+				if (newTitleCode < currTitleCode) {
+					return insertionIndex = i;
+				} else if (newTitleCode > currTitleCode) {
+					insertionIndex = i + 1;
 					break;
 				}
 				
@@ -277,5 +283,24 @@ public class DVDCollection {
 		
 	}
 	
+	private Boolean checkRating(String rating) {
+		Set<String> tvRatings = new HashSet<>();
+	    
+	    // Add TV ratings to the set
+	    tvRatings.add("G");
+	    tvRatings.add("PG");
+	    tvRatings.add("PG-13");
+	    tvRatings.add("R");
+	    tvRatings.add("NC-17");
+	    
+	    if (tvRatings.contains(rating)) {
+	    	return true;
+	    }
+	    
+	    return false;
+	    
+	}
 	
 }
+
+
