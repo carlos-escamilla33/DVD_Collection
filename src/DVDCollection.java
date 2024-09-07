@@ -53,7 +53,7 @@ public class DVDCollection {
 		for (int i = 0; i < this.numdvds; i ++) {
 			DVD curr = this.dvdArray[i];
 			
-			if (curr.getTitle() == title.toUpperCase()) {
+			if (curr.getTitle().equals(title)) {
 				this.shiftDVDCollectionLeft(i);
 				numdvds --;
 				this.dvdArray[dvdArray.length - 1] = null;
@@ -66,7 +66,8 @@ public class DVDCollection {
 		String res = "";
 		
 		for (int i = 0; i < this.numdvds; i ++) {
-			if (this.dvdArray[i].getRating() == rating) {
+			String currRating = this.dvdArray[i].getRating();
+			if (currRating.equals(rating)) {
 				res += this.dvdArray[i].getTitle() + "\n";
 			}
 		}
@@ -96,6 +97,7 @@ public class DVDCollection {
 			while (scanner.hasNextLine()) {
 				// reading the current line
 				String data = scanner.nextLine();
+				data.trim();
 				// create a helper function to get the title rating and runningTime
 				String[] dvdInfo = this.getDVDInfo(data);
 				// check to see if data is corrupted, if the data is corrupted then stop intializing
@@ -138,46 +140,46 @@ public class DVDCollection {
 	
 	// ******** Additional helper methods ********
 	
-//	private String[] getDVDInfo(String data) {
-//		// create the dvdInfo array with a length of 3
-//		String[] dvdInfoArray = new String[3];
-//		int startIdx = 0;
-//		int j = 0;
-//		
-//		for (int i = 0; i <= data.length(); i ++) {
-//			
-//			if (data.charAt(i) == ',' || i == data.length() - 1) {
-//				
-//				String currData = "";
-//				int k = startIdx;
-//				
-//				while (k < i) {
-//					currData += data.charAt(k);
-//					k ++;
-//				}
-//				
-//				if (j < 3) {
-//					dvdInfoArray[j] = currData;
-//					j ++;
-//				}
-//				
-//				startIdx = i + 1;
-//			}
-//		}
-//		
-//		if (j < 3 && startIdx < data.length()) {
-//			String endData = "";
-//			
-//			while(startIdx < data.length()) {
-//				endData += data.charAt(startIdx);
-//				startIdx ++;
-//			}
-//			
-//			dvdInfoArray[j] = endData;
-//		}
-//		
-//		return dvdInfoArray;
-//	}
+	private String[] getDVDInfo(String data) {
+		// create the dvdInfo array with a length of 3
+		String[] dvdInfoArray = new String[3];
+		int startIdx = 0;
+		int j = 0;
+		// this fuckingn line
+		for (int i = 0; i < data.length(); i ++) {
+			
+			if (data.charAt(i) == ',') {
+				
+				String currData = "";
+				int k = startIdx;
+				
+				while (k < i) {
+					currData += data.charAt(k);
+					k ++;
+				}
+				
+				if (j < 3) {
+					dvdInfoArray[j] = currData;
+					j ++;
+				}
+				
+				startIdx = i + 1;
+			}
+		}
+		
+		if (j < 3 && startIdx < data.length()) {
+			String endData = "";
+			
+			while(startIdx < data.length()) {
+				endData += data.charAt(startIdx);
+				startIdx ++;
+			}
+			
+			dvdInfoArray[j] = endData;
+		}
+		
+		return dvdInfoArray;
+	}
 	
 	private void shiftDVDCollectionLeft(int startIndex) {
 		int p1 = startIndex;
@@ -201,7 +203,7 @@ public class DVDCollection {
 		String newTitle = newDVD.getTitle().toUpperCase();
 		
 		for (int i = 0; i < numdvds; i ++) {
-			String currTitle = dvdArray[i].getTitle().toLowerCase();
+			String currTitle = dvdArray[i].getTitle().toUpperCase();
 			int j = 0;
 			int k = 0;
 			
@@ -215,8 +217,9 @@ public class DVDCollection {
 					k ++;
 				}
 				
+				
 				if ((int) newTitle.charAt(k) > (int) currTitle.charAt(j)) {
-					insertionIndex = i;
+					insertionIndex ++;
 					break;
 				}
 				
