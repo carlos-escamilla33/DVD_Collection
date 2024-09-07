@@ -83,7 +83,7 @@ public class DVD {
      */
 	
 	public String toString() {
-		return this.getTitle() + "," + this.getRating() + "," + this.getRunningTime() + "min";
+		return this.getTitle() + "," + this.getRating() + "," + this.getRunningTime();
 	}
 	
 }
