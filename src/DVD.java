@@ -36,7 +36,7 @@ public class DVD {
 	}
 	
 	public String toString() {
-		return getClass().getName() + '@' + Integer.toHexString(hashCode());
+		return this.getTitle() + "/" + this.getRating() + "/" + this.getRunningTime() + "min";
 	}
 	
 }

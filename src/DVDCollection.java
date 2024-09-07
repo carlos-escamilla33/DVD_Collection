@@ -13,7 +13,6 @@ public class DVDCollection {
 	}
 	
 	public String toString() {
-		// have a result string
 		String res = "";
 		
 		res += "numdvds = " + Integer.toString(numdvds) + "\n";
@@ -32,14 +31,10 @@ public class DVDCollection {
 	}
 	
 	public void addOrModifyDVD(String title, String rating, String runningTime) {
-		// check to see if the rating and running time is valid
 		if (rating.length() > 0 && Integer.parseInt(runningTime) > 0) {
-			// call the modifyDVD helper method
 			this.modifyDVDHelper(title, rating, runningTime);
 			
-			// check to see if the modified attribute is true because if it is not
 			if (!this.modified) {
-				// check to see if we need to double the size of our dvdArray
 				if (numdvds == dvdArray.length) {
 					this.doubleArraySize();
 				}
@@ -86,25 +81,19 @@ public class DVDCollection {
 	}
 	
 	public void loadData(String filename) {
-		// init the infile
 		this.sourceName = filename;
 		File inFile = new File(this.sourceName);
-		// try to open the file input
+		
 		try {
-			// scanner will help us read the line
 			Scanner scanner = new Scanner(inFile);
-			// checking to see if there exists a next line of text
 			while (scanner.hasNextLine()) {
-				// reading the current line
 				String data = scanner.nextLine();
 				data.trim();
-				// create a helper function to get the title rating and runningTime
+			
 				String[] dvdInfo = this.getDVDInfo(data);
-				// check to see if data is corrupted, if the data is corrupted then stop intializing
-				if (dvdInfo.length != 3) {
-					break;
+				if (dvdInfo[2] == null) {
+					throw new Exception("Corrupt data in DVD inputs");
 				}
-				// use those three values to create a dvd by using the addOrModify method
 				this.addOrModifyDVD(dvdInfo[0], dvdInfo[1], dvdInfo[2]);
 			}
 			
@@ -112,7 +101,6 @@ public class DVDCollection {
 			
 		} catch (Exception e) {
 			System.out.println(e);
-			// if the file cannot be found start with an empty array
 			this.dvdArray = new DVD[7];
 			this.numdvds = 0;
 		}
@@ -122,11 +110,9 @@ public class DVDCollection {
 		File file = new File(this.sourceName);
 		
 		try {
-			if (file.createNewFile()) {
-				FileWriter myWriter = new FileWriter(this.sourceName);
-				myWriter.write(this.toString());
-				myWriter.close();
-			}
+			FileWriter myWriter = new FileWriter(this.sourceName);
+			myWriter.write(this.outputDVDs());
+			myWriter.close();
 			
 		} catch (IOException el) {
 			el.printStackTrace();
@@ -139,6 +125,16 @@ public class DVDCollection {
 	
 	
 	// ******** Additional helper methods ********
+	
+	private String outputDVDs() {
+		String res = "";
+		
+		for (int i = 0; i < this.numdvds; i ++) {
+			res += this.dvdArray[i].toString() + "\n";
+		}
+		
+		return res;
+	}
 	
 	private String[] getDVDInfo(String data) {
 		// create the dvdInfo array with a length of 3
@@ -272,7 +268,7 @@ public class DVDCollection {
 			if (this.modified) {
 				break;
 			}
-			if (title.toUpperCase() == dvdArray[i].getTitle()) {
+			if (title.toUpperCase().equals(dvdArray[i].getTitle())) {
 				dvdArray[i].setRating(rating);
 				dvdArray[i].setRunningTime(Integer.parseInt(runningTime));
 				this.modified = true;
