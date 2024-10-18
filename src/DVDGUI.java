@@ -7,20 +7,21 @@ import javax.swing.*;
 
 public class DVDGUI implements DVDUserInterface {
 	 
-	 private DVDCollection dvdlist;
+	 private DVDCollection dvdlist; // This is an instance of the dvd collection
 	 
 	 public DVDGUI(DVDCollection dl)
 	 {
-		 dvdlist = dl;
+		 dvdlist = dl; // takes an instance of the DVD collection into the constructor
 	 }
 	 
-	 public void processCommands()
+	 public void processCommands() // this is the interface method that is used from DVDUserInterface
 	 {
 		 String[] commands = {"Add/Modify DVD",
 				 	"Remove DVD",
 				 	"Get DVDs By Rating",
 				 	"Get Total Running Time",
-				 	"Exit and Save"};
+				 	"Exit and Save",
+				 	}; // I should probably add my command in here
 		 
 		 int choice;
 		 
@@ -40,6 +41,7 @@ public class DVDGUI implements DVDUserInterface {
 			 	case 2: doGetDVDsByRating(); break;
 			 	case 3: doGetTotalRunningTime(); break;
 			 	case 4: doSave(); break;
+			 	case 5: enterFilename(); break;
 			 	default:  // do nothing
 			 }
 			 
@@ -123,5 +125,53 @@ public class DVDGUI implements DVDUserInterface {
 		dvdlist.save();
 		
 	}
+	
+	private void enterFilename() {
+		// Request the filename
+		String filename = JOptionPane.showInputDialog("Enter filename");
+		
+		if (filename == null) return;
+		
+		filename = filename.toUpperCase();
+		
+		dvdlist.loadData(filename);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 }
