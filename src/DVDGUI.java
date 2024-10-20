@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+
 import javax.swing.*;
 
 /**
@@ -9,13 +11,12 @@ public class DVDGUI implements DVDUserInterface {
 	 
 	 private DVDCollection dvdlist; // This is an instance of the dvd collection
 	 
-	 public DVDGUI(DVDCollection dl)
-	 {
-		 dvdlist = dl; // takes an instance of the DVD collection into the constructor
+	 public DVDGUI(DVDCollection dl) {
+		 this.dvdlist = dl; // takes an instance of the DVD collection into the constructor
+		 this.createGUI();
 	 }
 	 
-	 public void processCommands() // this is the interface method that is used from DVDUserInterface
-	 {
+	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
 		 String[] commands = {"Add/Modify DVD",
 				 	"Remove DVD",
 				 	"Get DVDs By Rating",
@@ -74,9 +75,9 @@ public class DVDGUI implements DVDUserInterface {
                 dvdlist.addOrModifyDVD(title, rating, time);
                 
                 // Display current collection to the console for debugging
-                System.out.println("Adding/Modifying: " + title + "," + rating + "," + time);
-                System.out.println(dvdlist);
-		
+//                System.out.println("Adding/Modifying: " + title + "," + rating + "," + time);
+//                System.out.println(dvdlist);
+//		
 	}
 	
 	private void doRemoveDVD() {
@@ -92,8 +93,8 @@ public class DVDGUI implements DVDUserInterface {
                 dvdlist.removeDVD(title);
                 
                 // Display current collection to the console for debugging
-                System.out.println("Removing: " + title);
-                System.out.println(dvdlist);
+//                System.out.println("Removing: " + title);
+//                System.out.println(dvdlist);
 
 	}
 	
@@ -107,16 +108,16 @@ public class DVDGUI implements DVDUserInterface {
 		rating = rating.toUpperCase();
 		
                 String results = dvdlist.getDVDsByRating(rating);
-                System.out.println("DVDs with rating " + rating);
-                System.out.println(results);
+//                System.out.println("DVDs with rating " + rating);
+//                System.out.println(results);
 
 	}
 
         private void doGetTotalRunningTime() {
                  
                 int total = dvdlist.getTotalRunningTime();
-                System.out.println("Total Running Time of DVDs: ");
-                System.out.println(total);
+//                System.out.println("Total Running Time of DVDs: ");
+//                System.out.println(total);
                 
         }
 
@@ -126,16 +127,28 @@ public class DVDGUI implements DVDUserInterface {
 		
 	}
 	
-	private void enterFilename() {
-		// Request the filename
-		String filename = JOptionPane.showInputDialog("Enter filename");
+	private void createGUI() {
+		JFrame frame = new JFrame("DVD Manager");
+		JPanel mainPanel = new JPanel(new BorderLayout());
 		
-		if (filename == null) return;
+		JPanel buttonPanel = new JPanel();
+		JPanel dvdListPanel = new JPanel();
+		JPanel detailsPanel = new JPanel();
 		
-		filename = filename.toUpperCase();
+		JButton addButton = new JButton("Add DVD");
+		JButton listButton = new JButton("List DVDs");
+		JButton detailsButton = new JButton("Details");
 		
-		dvdlist.loadData(filename);
+		buttonPanel.add(addButton);
+		buttonPanel.add(listButton);
+		buttonPanel.add(detailsButton);
 		
+		mainPanel.add(buttonPanel);
+		
+		frame.add(mainPanel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(600, 400);
+		frame.setVisible(true);
 	}
 	
 	
