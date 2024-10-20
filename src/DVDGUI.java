@@ -13,10 +13,9 @@ public class DVDGUI implements DVDUserInterface {
 	 
 	 public DVDGUI(DVDCollection dl) {
 		 this.dvdlist = dl; // takes an instance of the DVD collection into the constructor
-		 this.createGUI();
 	 }
 	 
-//	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
+	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
 //		 String[] commands = {"Add/Modify DVD",
 //				 	"Remove DVD",
 //				 	"Get DVDs By Rating",
@@ -24,6 +23,29 @@ public class DVDGUI implements DVDUserInterface {
 //				 	"Exit and Save",
 //				 	};
 //		 
+		 String[] buttonPanelCommands = {"Add DVD", "List DVDs", "Details"};
+		 
+		 JFrame frame = new JFrame("DVD Manager");
+		 JPanel mainPanel = new JPanel(new BorderLayout());
+			
+		 JPanel buttonPanel = new JPanel();
+		 JPanel dvdListPanel = new JPanel();
+		 JPanel detailsPanel = new JPanel();
+			
+		 for (int i = 0; i < buttonPanelCommands.length; i ++) {
+			 buttonPanel.add(new JButton(buttonPanelCommands[i]));
+		 }
+				
+		 mainPanel.add(buttonPanel);
+				
+		 frame.add(mainPanel);
+		 
+//		 Whatever happens in one panel can affect what happens in another panel
+		 
+		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 frame.setSize(600, 400);
+		 frame.setVisible(true);
+			 
 //		 int choice;
 //		 
 //		 do {
@@ -47,7 +69,7 @@ public class DVDGUI implements DVDUserInterface {
 //			 
 //		 } while (choice != commands.length-1);
 //		 System.exit(0);
-//	 }
+	 }
 
 	private void doAddOrModifyDVD() {
 
@@ -126,29 +148,29 @@ public class DVDGUI implements DVDUserInterface {
 		
 	}
 	
-	private void createGUI() {
-		JFrame frame = new JFrame("DVD Manager");
-		JPanel mainPanel = new JPanel(new BorderLayout());
-		
-		JPanel buttonPanel = new JPanel();
-		JPanel dvdListPanel = new JPanel();
-		JPanel detailsPanel = new JPanel();
-		
-		JButton addButton = new JButton("Add DVD");
-		JButton listButton = new JButton("List DVDs");
-		JButton detailsButton = new JButton("Details");
-		
-		buttonPanel.add(addButton);
-		buttonPanel.add(listButton);
-		buttonPanel.add(detailsButton);
-		
-		mainPanel.add(buttonPanel);
-		
-		frame.add(mainPanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(600, 400);
-		frame.setVisible(true);
-	}
+//	private void createGUI() {
+//		JFrame frame = new JFrame("DVD Manager");
+//		JPanel mainPanel = new JPanel(new BorderLayout());
+//		
+//		JPanel buttonPanel = new JPanel();
+//		JPanel dvdListPanel = new JPanel();
+//		JPanel detailsPanel = new JPanel();
+//		
+//		JButton addButton = new JButton("Add DVD");
+//		JButton listButton = new JButton("List DVDs");
+//		JButton detailsButton = new JButton("Details");
+//		
+//		buttonPanel.add(addButton);
+//		buttonPanel.add(listButton);
+//		buttonPanel.add(detailsButton);
+//		
+//		mainPanel.add(buttonPanel);
+//		
+//		frame.add(mainPanel);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setSize(600, 400);
+//		frame.setVisible(true);
+//	}
 	
 	
 	

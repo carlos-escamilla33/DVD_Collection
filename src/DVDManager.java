@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 public class DVDManager {
 
 public static void main(String[] args) {
-		DVDGUI dlInterface;
+		DVDUserInterface dlInterface;
 		DVDCollection dl = new DVDCollection();
 		String filename = JOptionPane.showInputDialog("Enter filename");
 		
@@ -15,5 +15,6 @@ public static void main(String[] args) {
 		dl.loadData(filename);
 		
 		dlInterface = new DVDGUI(dl);
+		dlInterface.processCommands();
 	}
 }
