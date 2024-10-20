@@ -16,39 +16,38 @@ public class DVDGUI implements DVDUserInterface {
 		 this.createGUI();
 	 }
 	 
-	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
-		 String[] commands = {"Add/Modify DVD",
-				 	"Remove DVD",
-				 	"Get DVDs By Rating",
-				 	"Get Total Running Time",
-				 	"Exit and Save",
-				 	}; // I should probably add my command in here
-		 
-		 int choice;
-		 
-		 do {
-			 choice = JOptionPane.showOptionDialog(null,
-					 "Select a command", 
-					 "DVD Collection", 
-					 JOptionPane.YES_NO_CANCEL_OPTION, 
-					 JOptionPane.QUESTION_MESSAGE, 
-					 null, 
-					 commands,
-					 commands[commands.length - 1]);
-		 
-			 switch (choice) {
-			 	case 0: doAddOrModifyDVD(); break;
-			 	case 1: doRemoveDVD(); break;
-			 	case 2: doGetDVDsByRating(); break;
-			 	case 3: doGetTotalRunningTime(); break;
-			 	case 4: doSave(); break;
-			 	case 5: enterFilename(); break;
-			 	default:  // do nothing
-			 }
-			 
-		 } while (choice != commands.length-1);
-		 System.exit(0);
-	 }
+//	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
+//		 String[] commands = {"Add/Modify DVD",
+//				 	"Remove DVD",
+//				 	"Get DVDs By Rating",
+//				 	"Get Total Running Time",
+//				 	"Exit and Save",
+//				 	};
+//		 
+//		 int choice;
+//		 
+//		 do {
+//			 choice = JOptionPane.showOptionDialog(null,
+//					 "Select a command", 
+//					 "DVD Collection", 
+//					 JOptionPane.YES_NO_CANCEL_OPTION, 
+//					 JOptionPane.QUESTION_MESSAGE, 
+//					 null, 
+//					 commands,
+//					 commands[commands.length - 1]);
+//		 
+//			 switch (choice) {
+//			 	case 0: doAddOrModifyDVD(); break;
+//			 	case 1: doRemoveDVD(); break;
+//			 	case 2: doGetDVDsByRating(); break;
+//			 	case 3: doGetTotalRunningTime(); break;
+//			 	case 4: doSave(); break;
+//			 	default:  // do nothing
+//			 }
+//			 
+//		 } while (choice != commands.length-1);
+//		 System.exit(0);
+//	 }
 
 	private void doAddOrModifyDVD() {
 
