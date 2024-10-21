@@ -1,3 +1,4 @@
+import java.util.*;
 import java.awt.BorderLayout;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class DVDGUI implements DVDUserInterface {
 	 private DVDCollection dvdlist; // This is an instance of the dvd collection
 	 
 	 public DVDGUI(DVDCollection dl) {
-		 this.dvdlist = dl; // takes an instance of the DVD collection into the constructor
+		 this.dvdlist = dl;
 	 }
 	 
 	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
@@ -22,7 +23,7 @@ public class DVDGUI implements DVDUserInterface {
 //				 	"Get Total Running Time",
 //				 	"Exit and Save",
 //				 	};
-//		 
+		 
 		 String[] buttonPanelCommands = {"Add DVD", "List DVDs", "Details"};
 		 
 		 JFrame frame = new JFrame("DVD Manager");
@@ -45,30 +46,6 @@ public class DVDGUI implements DVDUserInterface {
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.setSize(600, 400);
 		 frame.setVisible(true);
-			 
-//		 int choice;
-//		 
-//		 do {
-//			 choice = JOptionPane.showOptionDialog(null,
-//					 "Select a command", 
-//					 "DVD Collection", 
-//					 JOptionPane.YES_NO_CANCEL_OPTION, 
-//					 JOptionPane.QUESTION_MESSAGE, 
-//					 null, 
-//					 commands,
-//					 commands[commands.length - 1]);
-//		 
-//			 switch (choice) {
-//			 	case 0: doAddOrModifyDVD(); break;
-//			 	case 1: doRemoveDVD(); break;
-//			 	case 2: doGetDVDsByRating(); break;
-//			 	case 3: doGetTotalRunningTime(); break;
-//			 	case 4: doSave(); break;
-//			 	default:  // do nothing
-//			 }
-//			 
-//		 } while (choice != commands.length-1);
-//		 System.exit(0);
 	 }
 
 	private void doAddOrModifyDVD() {
@@ -148,29 +125,24 @@ public class DVDGUI implements DVDUserInterface {
 		
 	}
 	
-//	private void createGUI() {
-//		JFrame frame = new JFrame("DVD Manager");
-//		JPanel mainPanel = new JPanel(new BorderLayout());
-//		
-//		JPanel buttonPanel = new JPanel();
-//		JPanel dvdListPanel = new JPanel();
-//		JPanel detailsPanel = new JPanel();
-//		
-//		JButton addButton = new JButton("Add DVD");
-//		JButton listButton = new JButton("List DVDs");
-//		JButton detailsButton = new JButton("Details");
-//		
-//		buttonPanel.add(addButton);
-//		buttonPanel.add(listButton);
-//		buttonPanel.add(detailsButton);
-//		
-//		mainPanel.add(buttonPanel);
-//		
-//		frame.add(mainPanel);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setSize(600, 400);
-//		frame.setVisible(true);
-//	}
+
+private ArrayList<String> getDVDArray() {
+	String[] dvdRatings = {"G", "PG", "PG-13", "R", "NC-17"};
+	ArrayList<String> allDVDs = new ArrayList<>();
+	
+	
+	for (String rating : dvdRatings) {
+		String currDVDsByRating = dvdlist.getDVDsByRating(rating);
+		String[] movieArray = currDVDsByRating.split("\\n");
+		
+		for (String movie : movieArray) {
+			allDVDs.add(movie);
+		}
+	}
+	
+	return allDVDs;
+	
+}
 	
 	
 	

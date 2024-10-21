@@ -7,7 +7,8 @@ public class DVDManager {
 public static void main(String[] args) {
 		DVDUserInterface dlInterface;
 		DVDCollection dl = new DVDCollection();
-		String filename = JOptionPane.showInputDialog("Enter filename");
+//		String filename = JOptionPane.showInputDialog("Enter filename");
+		String filename = "dvddata.txt";
 		
 		if (filename == null) return;
 		
