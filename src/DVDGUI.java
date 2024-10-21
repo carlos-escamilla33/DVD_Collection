@@ -1,5 +1,7 @@
 import java.util.*;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -17,32 +19,33 @@ public class DVDGUI implements DVDUserInterface {
 	 }
 	 
 	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
-//		 String[] commands = {"Add/Modify DVD",
-//				 	"Remove DVD",
-//				 	"Get DVDs By Rating",
-//				 	"Get Total Running Time",
-//				 	"Exit and Save",
-//				 	};
-		 
-		 String[] buttonPanelCommands = {"Add DVD", "List DVDs", "Details"};
-		 
 		 JFrame frame = new JFrame("DVD Manager");
 		 JPanel mainPanel = new JPanel(new BorderLayout());
 			
 		 JPanel buttonPanel = new JPanel();
 		 JPanel dvdListPanel = new JPanel();
 		 JPanel detailsPanel = new JPanel();
-			
-		 for (int i = 0; i < buttonPanelCommands.length; i ++) {
-			 buttonPanel.add(new JButton(buttonPanelCommands[i]));
-		 }
-				
+		 
+		 JButton addButton = new JButton("Add DVD");
+		 JButton displayButton = new JButton("Display DVDs");
+		 JButton detailsButton = new JButton("Details");
+		 
+		 // Event listeners
+		 
+		 displayButton.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		           displayDVDs();
+		        }
+		    });
+		 
+		 buttonPanel.add(addButton);
+		 buttonPanel.add(displayButton);
+		 buttonPanel.add(detailsButton);
+		 
 		 mainPanel.add(buttonPanel);
-				
 		 frame.add(mainPanel);
 		 
-//		 Whatever happens in one panel can affect what happens in another panel
-		 
+		 frame.setLocation(100,100);
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.setSize(600, 400);
 		 frame.setVisible(true);
@@ -124,6 +127,31 @@ public class DVDGUI implements DVDUserInterface {
 		dvdlist.save();
 		
 	}
+	
+private void displayDVDs() {
+	JFrame frame = new JFrame("All DVDs");
+	JPanel mainPanel = new JPanel(new BorderLayout());
+	ArrayList<String> dvds = getDVDArray();
+	
+	JPanel moviePanel = new JPanel();
+	
+	for (String dvd: dvds) {
+		System.out.println(dvd);
+		moviePanel.add(new JButton(dvd));
+	}
+	
+	mainPanel.add(moviePanel);
+	frame.add(mainPanel);
+	
+	frame.setLocation(420, 100);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setSize(600, 400);
+	frame.setVisible(true);
+	
+}
+	
+
+// HELPER METHODS
 	
 
 private ArrayList<String> getDVDArray() {
