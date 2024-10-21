@@ -136,6 +136,7 @@ private void displayDVDs() {
 	JPanel moviePanel = new JPanel();
 	
 	for (String dvd: dvds) {
+		System.out.println("spot");
 		System.out.println(dvd);
 		moviePanel.add(new JButton(dvd));
 	}
@@ -143,7 +144,7 @@ private void displayDVDs() {
 	mainPanel.add(moviePanel);
 	frame.add(mainPanel);
 	
-	frame.setLocation(420, 100);
+	frame.setLocation(800, 100);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(600, 400);
 	frame.setVisible(true);
@@ -164,7 +165,9 @@ private ArrayList<String> getDVDArray() {
 		String[] movieArray = currDVDsByRating.split("\\n");
 		
 		for (String movie : movieArray) {
-			allDVDs.add(movie);
+			if (movie != "") {
+				allDVDs.add(movie);
+			}
 		}
 	}
 	
