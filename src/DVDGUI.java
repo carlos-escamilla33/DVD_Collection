@@ -16,6 +16,7 @@ public class DVDGUI implements DVDUserInterface {
 	 
 	 public DVDGUI(DVDCollection dl) {
 		 this.dvdlist = dl;
+		 this.getDVDArray();
 	 }
 	 
 	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
@@ -131,14 +132,21 @@ public class DVDGUI implements DVDUserInterface {
 private void displayDVDs() {
 	JFrame frame = new JFrame("All DVDs");
 	JPanel mainPanel = new JPanel(new BorderLayout());
-	ArrayList<String> dvds = getDVDArray();
+	ArrayList<String[]> dvds = getDVDArray();
 	
 	JPanel moviePanel = new JPanel();
 	
-	for (String dvd: dvds) {
-		System.out.println("spot");
-		System.out.println(dvd);
-		moviePanel.add(new JButton(dvd));
+	for (int i = 0; i < dvds.size(); i ++) {
+		final int index = i;
+		JButton currDVDBtn = new JButton(dvds.get(i)[0]);
+		
+		currDVDBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayDVDInfo(dvds.get(index)[0], dvds.get(index)[1], dvds.get(index)[2]);
+			}
+		});
+		
+		moviePanel.add(currDVDBtn);
 	}
 	
 	mainPanel.add(moviePanel);
@@ -150,26 +158,53 @@ private void displayDVDs() {
 	frame.setVisible(true);
 	
 }
+
+private void displayDVDInfo(String title, String rating, String runningTime) {
+	JFrame frame = new JFrame("Single DVD Info");
+	JPanel mainPanel = new JPanel(new BorderLayout());
+	
+	JPanel infoPanel = new JPanel();
+	
+	JButton dvdTitleBtn = new JButton(title);
+	JButton dvdRatingBtn = new JButton(rating);
+	JButton dvdTotalTimeBtn = new JButton(runningTime);
+	
+	infoPanel.add(dvdTitleBtn);
+	infoPanel.add(dvdRatingBtn);
+	infoPanel.add(dvdTotalTimeBtn);
+	
+	mainPanel.add(infoPanel);
+	frame.add(mainPanel);
+	
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setSize(600, 400);
+	frame.setVisible(true);
+}
 	
 
 // HELPER METHODS
 	
 
-private ArrayList<String> getDVDArray() {
+private ArrayList<String[]> getDVDArray() {
 	String[] dvdRatings = {"G", "PG", "PG-13", "R", "NC-17"};
-	ArrayList<String> allDVDs = new ArrayList<>();
+	ArrayList<String[]> allDVDs = new ArrayList<>();
+	String dvdCollectionInfo = dvdlist.toString();
+	String[] lines = dvdCollectionInfo.split("\n");
 	
 	
-	for (String rating : dvdRatings) {
-		String currDVDsByRating = dvdlist.getDVDsByRating(rating);
-		String[] movieArray = currDVDsByRating.split("\\n");
-		
-		for (String movie : movieArray) {
-			if (movie != "") {
-				allDVDs.add(movie);
+	
+	for (String line: lines) {
+		if (line.contains("dvdArray[")) {
+			String[] sections = line.split("=");
+			
+			if (sections.length == 2) {
+				String rightSection = sections[1].trim();
+				String[] movieDetails = rightSection.split("/");
+				allDVDs.add(movieDetails);
 			}
 		}
 	}
+	
 	
 	return allDVDs;
 	
