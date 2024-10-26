@@ -224,7 +224,6 @@ private ArrayList<String[]> getDVDArray() {
 		}
 	}
 	
-	
 	return allDVDs;
 	
 }
