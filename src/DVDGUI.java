@@ -13,6 +13,7 @@ import javax.swing.*;
 public class DVDGUI implements DVDUserInterface {
 	 
 	 private DVDCollection dvdlist; // This is an instance of the dvd collection
+	 private JFrame displayFrame;
 	 
 	 public DVDGUI(DVDCollection dl) {
 		 this.dvdlist = dl;
@@ -20,16 +21,16 @@ public class DVDGUI implements DVDUserInterface {
 	 }
 	 
 	 public void processCommands() { // this is the interface method that is used from DVDUserInterface
-		 JFrame frame = new JFrame("DVD Manager");
+		 JFrame mainFrame = new JFrame("DVD Collection Manager");
 		 JPanel mainPanel = new JPanel(new BorderLayout());
 			
 		 JPanel buttonPanel = new JPanel();
 		 JPanel dvdListPanel = new JPanel();
 		 JPanel detailsPanel = new JPanel();
 		 
-		 JButton addButton = new JButton("Add DVD");
+		 JButton addEditButton = new JButton("Add/Edit DVD");
 		 JButton displayButton = new JButton("Display DVDs");
-		 JButton detailsButton = new JButton("Details");
+		 JButton removeButton = new JButton("Remove DVD");
 		 
 		 // Event listeners
 		 
@@ -39,17 +40,31 @@ public class DVDGUI implements DVDUserInterface {
 		        }
 		    });
 		 
-		 buttonPanel.add(addButton);
+		 addEditButton.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 doAddOrModifyDVD();
+			 }
+		 });
+		 
+		 removeButton.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 doRemoveDVD();
+			 }
+		 });
+		 
+		 // adding the buttons to the button panel
+		 
+		 buttonPanel.add(addEditButton);
 		 buttonPanel.add(displayButton);
-		 buttonPanel.add(detailsButton);
+		 buttonPanel.add(removeButton);
 		 
 		 mainPanel.add(buttonPanel);
-		 frame.add(mainPanel);
+		 mainFrame.add(mainPanel);
 		 
-		 frame.setLocation(100,100);
-		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 frame.setSize(600, 400);
-		 frame.setVisible(true);
+		 mainFrame.setLocation(100,100);
+		 mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 mainFrame.setSize(600, 400);
+		 mainFrame.setVisible(true);
 	 }
 
 	private void doAddOrModifyDVD() {
@@ -73,13 +88,12 @@ public class DVDGUI implements DVDUserInterface {
 		if (time == null) {
 		}
 		
-                // Add or modify the DVD (assuming the rating and time are valid
-                dvdlist.addOrModifyDVD(title, rating, time);
-                
-                // Display current collection to the console for debugging
-//                System.out.println("Adding/Modifying: " + title + "," + rating + "," + time);
-//                System.out.println(dvdlist);
-//		
+        // Add or modify the DVD (assuming the rating and time are valid
+		dvdlist.addOrModifyDVD(title, rating, time);
+	
+		this.doSave();
+		this.displayDVDs();
+             
 	}
 	
 	private void doRemoveDVD() {
@@ -91,12 +105,11 @@ public class DVDGUI implements DVDUserInterface {
 		}
 		title = title.toUpperCase();
 		
-                // Remove the matching DVD if found
-                dvdlist.removeDVD(title);
-                
-                // Display current collection to the console for debugging
-//                System.out.println("Removing: " + title);
-//                System.out.println(dvdlist);
+        // Remove the matching DVD if found
+        dvdlist.removeDVD(title);
+        
+        this.doSave();
+        this.displayDVDs();
 
 	}
 	
@@ -130,7 +143,13 @@ public class DVDGUI implements DVDUserInterface {
 	}
 	
 private void displayDVDs() {
-	JFrame frame = new JFrame("All DVDs");
+	
+	if (this.displayFrame != null) {
+		displayFrame.dispose();
+	}
+	
+	this.displayFrame = new JFrame("All DVDs");
+	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	ArrayList<String[]> dvds = getDVDArray();
 	
@@ -150,12 +169,12 @@ private void displayDVDs() {
 	}
 	
 	mainPanel.add(moviePanel);
-	frame.add(mainPanel);
+	displayFrame.add(mainPanel);
 	
-	frame.setLocation(800, 100);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setSize(600, 400);
-	frame.setVisible(true);
+	displayFrame.setLocation(800, 100);
+	displayFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	displayFrame.setSize(600, 400);
+	displayFrame.setVisible(true);
 	
 }
 
@@ -176,7 +195,7 @@ private void displayDVDInfo(String title, String rating, String runningTime) {
 	mainPanel.add(infoPanel);
 	frame.add(mainPanel);
 	
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.setSize(600, 400);
 	frame.setVisible(true);
 }
