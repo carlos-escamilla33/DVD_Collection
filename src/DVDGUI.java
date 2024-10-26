@@ -1,5 +1,8 @@
 import java.util.*;
+import java.io.File;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -70,7 +73,7 @@ public class DVDGUI implements DVDUserInterface {
 	private void doAddOrModifyDVD() {
 
 		// Request the title
-		String title = JOptionPane.showInputDialog("Enter title");
+		String title = JOptionPane.showInputDialog("Enter title to add/edit");
 		if (title == null) {
 			return;		// dialog was cancelled
 		}
@@ -99,7 +102,7 @@ public class DVDGUI implements DVDUserInterface {
 	private void doRemoveDVD() {
 
 		// Request the title
-		String title = JOptionPane.showInputDialog("Enter title");
+		String title = JOptionPane.showInputDialog("Enter title to remove");
 		if (title == null) {
 			return;		// dialog was cancelled
 		}
@@ -161,7 +164,7 @@ private void displayDVDs() {
 		
 		currDVDBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayDVDInfo(dvds.get(index)[0], dvds.get(index)[1], dvds.get(index)[2]);
+				displayDVDInfo(dvds.get(index)[0].toUpperCase(), dvds.get(index)[1], dvds.get(index)[2]);
 			}
 		});
 		
@@ -187,10 +190,21 @@ private void displayDVDInfo(String title, String rating, String runningTime) {
 	JButton dvdTitleBtn = new JButton(title);
 	JButton dvdRatingBtn = new JButton(rating);
 	JButton dvdTotalTimeBtn = new JButton(runningTime);
+    
+    ImageIcon dvdIcon = new ImageIcon(getClass().getClassLoader().getResource("images/" + title + ".jpg"));
+
+    JLabel imgLabel = new JLabel(dvdIcon);
+       
+    imgLabel.setPreferredSize(new Dimension(300,300)); 
+
+    infoPanel.add(imgLabel);
+    
+	
 	
 	infoPanel.add(dvdTitleBtn);
 	infoPanel.add(dvdRatingBtn);
 	infoPanel.add(dvdTotalTimeBtn);
+	
 	
 	mainPanel.add(infoPanel);
 	frame.add(mainPanel);
